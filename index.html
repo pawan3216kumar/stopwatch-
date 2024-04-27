@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #container{
+            height: 200px;
+            width: 500px;
+            background-color: rgb(77, 77, 199);
+            text-align: center;
+            padding-top: 130px;
+            margin: auto;
+            font-size: 40px;
+            margin: auto;
+        }
+       
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div class="timerDisplay">
+            00 : 00 : 00 : 00
+        </div>
+        <button id="startTimer">Start</button>
+        <button id="pauseTimer">Pause</button>
+        <button id="resetTimer">Reset</button>
+    </div>
+</body>
+<script>
+    let [milisecond , second , minute , hour] = [0 , 0 , 0 , 0]
+    let timerDisplay = document.querySelector(".timerDisplay")
+    let int;
+
+    document.getElementById("startTimer").addEventListener("click" , ()=>{
+          if(int !== null){
+            clearInterval(int)
+          }
+          int = setInterval(displayTimer , 10)   
+    })
+    
+    document.getElementById("pauseTimer").addEventListener("click" , ()=>{
+          clearInterval(int)
+    })
+
+    document.getElementById("resetTimer").addEventListener("click" , ()=>{
+        clearInterval(int)
+        
+        timerDisplay.innerHTML = "00 : 00 : 00 : 000";
+    })
+
+    function displayTimer(){
+          milisecond += 10;
+          if(milisecond == 1000){
+            milisecond = 0;
+            second++;
+            if(second == 60){
+                second = 0;
+                minute++;
+                if(minute == 60){
+                    minute = 0;
+                    hour++;
+                }
+            }
+          }
+
+      let h = hour < 10 ? "0" + hour : hour;
+      let m = minute < 10? "0" + minute : minute;
+      let s = second < 10 ? "0" + second : second;
+      let ml = milisecond < 10 ? "0" + milisecond : milisecond < 100 ? "00" + milisecond : milisecond;
+
+      timerDisplay.innerHTML = `${h}:${m}:${s}:${ml}`
+    }
+</script>
+</html>
